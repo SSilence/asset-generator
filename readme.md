@@ -5,6 +5,14 @@ This is a cheap asset resizer for Android and iOS. It takes an image in @3x or x
 * Android: mdpi, ldpi, hdpi, xhdpi, xxhdpi
 * iOS: @1x, @2x, @3x
 
+## Installation
+
+```
+npm install asset-generator -g
+```
+
+## Usage
+
 use with three commandline args:
 ```
 asset-generator <files> <target-dir-android> <target-dir-ios>');
