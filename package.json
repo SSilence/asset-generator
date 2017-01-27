@@ -1,0 +1,17 @@
+{
+  "name": "asset-generator",
+  "version": "1.0.0",
+  "description": "a simple commandline asset generator for iOS and Android",
+  "dependencies": {
+    "fs-extra": "^1.0.0",
+    "node-glob": "^1.2.0",
+    "sharp": "^0.17.0"
+  },
+  "devDependencies": {},
+  "bin": {
+    "asset-generator": "./index.js"
+  },
+  "author": "Tobias Zeising <tobias.zeising@aditu.de> (http://www.aditu.de)",
+  "license": "MIT",
+  "repository": "github:ssilence/asset-generator"
+}
