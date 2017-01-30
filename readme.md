@@ -13,14 +13,15 @@ npm install asset-generator -g
 
 ## Usage
 
-use with three commandline args:
 ```
-asset-generator <files> <target-dir-android> <target-dir-ios>');
+asset-generator <files> --android <target-dir-android> --ios <target-dir-ios>');
 ```
+
+android or ios option is optional. Only use --android if you need only android assets.
 
 example:
 ```
-#asset-generator *.png /my-android-project/app/src/main/res /my-ios-project/app/assets
+#asset-generator *.png --android /my-android-project/app/src/main/res --ios /my-ios-project/app/assets
 ```
 
 ---
