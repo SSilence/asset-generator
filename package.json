@@ -1,6 +1,6 @@
 {
   "name": "asset-generator",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "a simple commandline asset generator for iOS and Android",
   "dependencies": {
     "commander": "^2.9.0",

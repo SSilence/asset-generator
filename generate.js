@@ -29,7 +29,7 @@ function generate(files, targetAndroid, targetIos) {
         let filetype = filename.substr(filename.lastIndexOf('.'), filename.length);
 
         filename = filename.substr(0, filename.lastIndexOf('.'));
-        if (filename.indexOf("@3x")!==false) {
+        if (filename.indexOf("@3x")!==-1) {
             filename = filename.substr(0, filename.lastIndexOf('@'));
         }
 
