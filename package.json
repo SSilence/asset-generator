@@ -1,12 +1,12 @@
 {
   "name": "asset-generator",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "a simple commandline asset generator for iOS and Android",
   "dependencies": {
-    "commander": "^2.9.0",
-    "fs-extra": "^1.0.0",
+    "commander": "^2.11.0",
+    "fs-extra": "^4.0.2",
     "node-glob": "^1.2.0",
-    "sharp": "^0.17.0"
+    "sharp": "^0.18.4"
   },
   "devDependencies": {},
   "bin": {

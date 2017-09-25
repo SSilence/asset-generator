@@ -1,6 +1,6 @@
 const fse = require('fs-extra');
 const sharp = require('sharp');
-const glob = require("glob");
+const glob = require("node-glob");
 const path = require("path");
 
 function ensureTrailingSlash(path) {
