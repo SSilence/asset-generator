@@ -1,27 +1,24 @@
 const fse = require('fs-extra');
-const sharp = require('sharp');
-const glob = require("node-glob");
-const path = require("path");
+const jimp = require('jimp');
+const glob = require('glob');
+const path = require('path');
 
 function ensureTrailingSlash(path) {
     return (path.endsWith('/') === false) ? path + "/" : path;
 }
 
-
 function resizeAndSave(factor, source, target) {
-    const image = sharp(source);
-    image.metadata().then(function(metadata) {
-        image.resize(Math.round(metadata.width * factor))
-             .toFile(target)
-             .then(() => {
-                 console.log(target + " generated");
-             })
-             .catch(error => {
-                 console.error(target + " ERROR: " + error);
-             });
+    jimp.read(source, function (err, image) {
+        image.resize(image.bitmap.width * factor, jimp.AUTO);
+        image.write(target, err => {
+            if (err) {
+                console.error(target + " ERROR: " + error);
+            } else {
+                console.log(target + " generated");
+            }
+        });
     });
 }
-
 
 function generate(files, targetAndroid, targetIos) {
     for (let file of files) {
@@ -51,7 +48,6 @@ function generate(files, targetAndroid, targetIos) {
     }
 }
 
-
 module.exports = (q, targetAndroid, targetIos) => {
     if (typeof targetAndroid !== "undefined") {
         targetAndroid = ensureTrailingSlash(targetAndroid);
@@ -68,9 +64,7 @@ module.exports = (q, targetAndroid, targetIos) => {
     }
 
     if (q.length == 1 && q[0].indexOf("*") !== -1) {
-        glob(q[0], function (er, files) {
-            generate(files, targetAndroid, targetIos);
-        });
+        glob(q[0], {}, (er, files) => generate(files, targetAndroid, targetIos));
     } else {
         generate(q, targetAndroid, targetIos);
     }
