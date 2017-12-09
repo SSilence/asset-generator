@@ -7,8 +7,12 @@ function ensureTrailingSlash(path) {
     return (path.endsWith('/') === false) ? path + "/" : path;
 }
 
-function getDirectoryPrefix(directoryPrefix) {
-  return (typeof directoryPrefix !== "undefined") ? directoryPrefix + '-' : '';
+function getDirectoryPrefix(skipPrefix, directoryPrefix) {
+  if(skipPrefix) {
+    return '';
+  } else {
+    return (typeof directoryPrefix !== "undefined") ? directoryPrefix + '-' : 'drawable-';
+  }
 }
 
 function resizeAndSave(factor, source, target) {
@@ -24,7 +28,7 @@ function resizeAndSave(factor, source, target) {
     });
 }
 
-function generate(files, targetAndroid, targetIos, directoryPrefix) {
+function generate(files, targetAndroid, targetIos, skipPrefix, directoryPrefix) {
     for (let file of files) {
         let filename = path.basename(file);
         let filetype = filename.substr(filename.lastIndexOf('.'), filename.length);
@@ -37,11 +41,11 @@ function generate(files, targetAndroid, targetIos, directoryPrefix) {
         console.info("process " + filename + filetype);
 
         if (typeof targetAndroid !== "undefined") {
-            resizeAndSave(0.5, file, targetAndroid + getDirectoryPrefix(directoryPrefix) + 'hdpi/' + filename + filetype);
-            resizeAndSave(0.25, file, targetAndroid + getDirectoryPrefix(directoryPrefix) + 'ldpi/' + filename + filetype);
-            resizeAndSave(1/3, file, targetAndroid + getDirectoryPrefix(directoryPrefix) + 'mdpi/' + filename + filetype);
-            resizeAndSave(2/3, file, targetAndroid + getDirectoryPrefix(directoryPrefix) + 'xhdpi/' + filename + filetype);
-            resizeAndSave(1, file, targetAndroid + getDirectoryPrefix(directoryPrefix) + 'xxhdpi/' + filename + filetype);
+            resizeAndSave(0.5, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'hdpi/' + filename + filetype);
+            resizeAndSave(0.25, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'ldpi/' + filename + filetype);
+            resizeAndSave(1/3, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'mdpi/' + filename + filetype);
+            resizeAndSave(2/3, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'xhdpi/' + filename + filetype);
+            resizeAndSave(1, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'xxhdpi/' + filename + filetype);
         }
 
         if (typeof targetIos !== "undefined") {
@@ -52,15 +56,15 @@ function generate(files, targetAndroid, targetIos, directoryPrefix) {
     }
 }
 
-module.exports = (q, targetAndroid, targetIos, directoryPrefix) => {
+module.exports = (q, targetAndroid, targetIos, skipPrefix, directoryPrefix) => {
 
     if (typeof targetAndroid !== "undefined") {
         targetAndroid = ensureTrailingSlash(targetAndroid);
-        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(directoryPrefix) + 'hdpi');
-        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(directoryPrefix) + 'ldpi');
-        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(directoryPrefix) + 'mdpi');
-        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(directoryPrefix) + 'xhdpi');
-        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(directoryPrefix) + 'xxhdpi');
+        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'hdpi');
+        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'ldpi');
+        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'mdpi');
+        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'xhdpi');
+        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'xxhdpi');
     }
 
     if (typeof targetIos !== "undefined") {
@@ -69,8 +73,8 @@ module.exports = (q, targetAndroid, targetIos, directoryPrefix) => {
     }
 
     if (q.length == 1 && q[0].indexOf("*") !== -1) {
-        glob(q[0], {}, (er, files) => generate(files, targetAndroid, targetIos, directoryPrefix));
+        glob(q[0], {}, (er, files) => generate(files, targetAndroid, targetIos, skipPrefix, directoryPrefix));
     } else {
-        generate(q, targetAndroid, targetIos, directoryPrefix);
+        generate(q, targetAndroid, targetIos, skipPrefix, directoryPrefix);
     }
 }

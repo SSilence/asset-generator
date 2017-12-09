@@ -9,7 +9,8 @@ program
   .usage('[options] <file ...>')
   .option('-a, --android [path]', 'android path')
   .option('-i, --ios [path]', 'iOS Path')
+  .option('-n, --skip-prefix', 'skip default \'drawable-\' directory prefix')
   .option('-p, --directory-prefix [prefix]', 'directory prefix')
   .parse(process.argv);
-
-generate(program.args, program.android, program.ios, program.directoryPrefix);
+  
+generate(program.args, program.android, program.ios, program.skipPrefix, program.directoryPrefix);
