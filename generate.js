@@ -33,11 +33,11 @@ function generate(files, targetAndroid, targetIos) {
         console.info("process " + filename + filetype);
 
         if (typeof targetAndroid !== "undefined") {
-            resizeAndSave(0.5, file, targetAndroid + 'drawable-hdpi/' + filename + filetype);
-            resizeAndSave(0.25, file, targetAndroid + 'drawable-ldpi/' + filename + filetype);
-            resizeAndSave(1/3, file, targetAndroid + 'drawable-mdpi/' + filename + filetype);
-            resizeAndSave(2/3, file, targetAndroid + 'drawable-xhdpi/' + filename + filetype);
-            resizeAndSave(1, file, targetAndroid + 'drawable-xxhdpi/' + filename + filetype);
+            resizeAndSave(0.5, file, targetAndroid + 'drawable-hdpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(0.25, file, targetAndroid + 'drawable-ldpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(1 / 3, file, targetAndroid + 'drawable-mdpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(2 / 3, file, targetAndroid + 'drawable-xhdpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(1, file, targetAndroid + 'drawable-xxhdpi/' + filename.toLowerCase() + filetype);
         }
 
         if (typeof targetIos !== "undefined") {
