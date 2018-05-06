@@ -41,11 +41,11 @@ function generate(files, targetAndroid, targetIos, skipPrefix, directoryPrefix) 
         console.info("process " + filename + filetype);
 
         if (typeof targetAndroid !== "undefined") {
-            resizeAndSave(0.5, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'hdpi/' + filename + filetype);
-            resizeAndSave(0.25, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'ldpi/' + filename + filetype);
-            resizeAndSave(1/3, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'mdpi/' + filename + filetype);
-            resizeAndSave(2/3, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'xhdpi/' + filename + filetype);
-            resizeAndSave(1, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'xxhdpi/' + filename + filetype);
+            resizeAndSave(0.5, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'hdpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(0.25, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'ldpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(1/3, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'mdpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(2/3, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'xhdpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(1, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'xxhdpi/' + filename.toLowerCase() + filetype);
         }
 
         if (typeof targetIos !== "undefined") {
