@@ -7,6 +7,14 @@ function ensureTrailingSlash(path) {
     return (path.endsWith('/') === false) ? path + "/" : path;
 }
 
+function getDirectoryPrefix(skipPrefix, directoryPrefix) {
+  if(skipPrefix) {
+    return '';
+  } else {
+    return (typeof directoryPrefix !== "undefined") ? directoryPrefix + '-' : 'drawable-';
+  }
+}
+
 function resizeAndSave(factor, source, target) {
     jimp.read(source, function (err, image) {
         image.resize(image.bitmap.width * factor, jimp.AUTO);
@@ -20,7 +28,7 @@ function resizeAndSave(factor, source, target) {
     });
 }
 
-function generate(files, targetAndroid, targetIos) {
+function generate(files, targetAndroid, targetIos, skipPrefix, directoryPrefix) {
     for (let file of files) {
         let filename = path.basename(file);
         let filetype = filename.substr(filename.lastIndexOf('.'), filename.length);
@@ -33,11 +41,11 @@ function generate(files, targetAndroid, targetIos) {
         console.info("process " + filename + filetype);
 
         if (typeof targetAndroid !== "undefined") {
-            resizeAndSave(0.5, file, targetAndroid + 'drawable-hdpi/' + filename.toLowerCase() + filetype);
-            resizeAndSave(0.25, file, targetAndroid + 'drawable-ldpi/' + filename.toLowerCase() + filetype);
-            resizeAndSave(1 / 3, file, targetAndroid + 'drawable-mdpi/' + filename.toLowerCase() + filetype);
-            resizeAndSave(2 / 3, file, targetAndroid + 'drawable-xhdpi/' + filename.toLowerCase() + filetype);
-            resizeAndSave(1, file, targetAndroid + 'drawable-xxhdpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(0.5, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'hdpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(0.25, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'ldpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(1/3, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'mdpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(2/3, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'xhdpi/' + filename.toLowerCase() + filetype);
+            resizeAndSave(1, file, targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'xxhdpi/' + filename.toLowerCase() + filetype);
         }
 
         if (typeof targetIos !== "undefined") {
@@ -48,14 +56,15 @@ function generate(files, targetAndroid, targetIos) {
     }
 }
 
-module.exports = (q, targetAndroid, targetIos) => {
+module.exports = (q, targetAndroid, targetIos, skipPrefix, directoryPrefix) => {
+
     if (typeof targetAndroid !== "undefined") {
         targetAndroid = ensureTrailingSlash(targetAndroid);
-        fse.ensureDirSync(targetAndroid + 'drawable-hdpi');
-        fse.ensureDirSync(targetAndroid + 'drawable-ldpi');
-        fse.ensureDirSync(targetAndroid + 'drawable-mdpi');
-        fse.ensureDirSync(targetAndroid + 'drawable-xhdpi');
-        fse.ensureDirSync(targetAndroid + 'drawable-xxhdpi');
+        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'hdpi');
+        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'ldpi');
+        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'mdpi');
+        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'xhdpi');
+        fse.ensureDirSync(targetAndroid + getDirectoryPrefix(skipPrefix, directoryPrefix) + 'xxhdpi');
     }
 
     if (typeof targetIos !== "undefined") {
@@ -64,8 +73,8 @@ module.exports = (q, targetAndroid, targetIos) => {
     }
 
     if (q.length == 1 && q[0].indexOf("*") !== -1) {
-        glob(q[0], {}, (er, files) => generate(files, targetAndroid, targetIos));
+        glob(q[0], {}, (er, files) => generate(files, targetAndroid, targetIos, skipPrefix, directoryPrefix));
     } else {
-        generate(q, targetAndroid, targetIos);
+        generate(q, targetAndroid, targetIos, skipPrefix, directoryPrefix);
     }
 }
