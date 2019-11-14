@@ -103,12 +103,10 @@ function generate(files, targetAndroid, targetIos) {
 module.exports = (q, targetAndroid, targetIos) => {
   if (typeof targetAndroid !== "undefined") {
     targetAndroid = ensureTrailingSlash(targetAndroid);
-    fse.ensureDirSync(targetAndroid);
   }
 
   if (typeof targetIos !== "undefined") {
     targetIos = ensureTrailingSlash(targetIos);
-    fse.ensureDirSync(targetIos);
   }
 
   if (q.length == 1 && q[0].indexOf("*") !== -1) {
