@@ -21,10 +21,8 @@ android or ios option is optional. Only use --android if you need only android a
 
 example:
 ```
-#asset-generator *.png --android /my-android-project/app/src/main/res --ios /my-ios-project/app/assets
+asset-generator *.png --android /my-android-project/app/src/main/res --ios /my-ios-project/app/assets
 ```
 
 ---
-Copyright (c) Tobias Zeising, tobias.zeising@aditu.de  
-http://www.aditu.de  
-Licensed under the MIT license 
+Originally created by [SSilence](https://github.com/SSilence/asset-generator)
